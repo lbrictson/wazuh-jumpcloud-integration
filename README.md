@@ -33,7 +33,7 @@ Note:  Paths are examples, you can use any path you like
 # Create directories
 mkdir -p /opt/jumpcloud
 # Download the latest release
-wget https://github.com/lbrictson/wazuh-jumpcloud-integration/releases
+wget https://github.com/lbrictson/wazuh-jumpcloud-integration/releases/download/0.0.1/wazuh-jumpcloud-integration -O /opt/jumpcloud/wazuh-jumpcloud-integration
 # Setup the config file
 wget https://raw.githubusercontent.com/lbrictson/wazuh-jumpcloud-integration/master/config/config.json -O /opt/jumpcloud/config.json
 # Place your JumpCloud API Key in the config file
@@ -73,7 +73,7 @@ Add a block to the `ossec.conf` file to configure the JumpCloud log file.  This 
 
 Lastly add the ruleset
 ```bash
-wget https://raw.githubusercontent.com/lbrictson/wazuh-jumpcloud-integration/master/rules/jumpcloud_rules.xml -O /var/ossec/etc/rules/jumpcloud_rules.xml
+wget https://raw.githubusercontent.com/lbrictson/wazuh-jumpcloud-integration/main/rules/jumpcloud.xml -O /var/ossec/etc/rules/jumpcloud_rules.xml
 chown wazuh:wazuh /var/ossec/etc/rules/jumpcloud_rules.xml
 ```
 
