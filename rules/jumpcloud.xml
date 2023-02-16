@@ -1,0 +1,127 @@
+<group name="jumpcloud,">
+    <rule id="866000" level="0">
+        <decoded_as>json</decoded_as>
+        <if_sid>86600</if_sid>
+        <field name="jumpcloud_event_type">\.+</field>
+        <description>JumpCloud messages.</description>
+    </rule>
+</group>
+<group name="jumpcloud,authentication_success,">
+    <rule id="866001" level="3">
+        <if_sid>866000</if_sid>
+        <mitre>
+            <id>T1078</id>
+            <id>T1021</id>
+        </mitre>
+        <group>pci_dss_10.2.5,</group>
+        <field name="jumpcloud_event_type">^directory$</field>
+        <field name="success">^true$</field>
+        <field name="initiated_by.type">admin</field>
+        <field name="event_type">admin_login_attempt</field>
+        <description>JumpCloud Portal Admin Login Success</description>
+        <options>no_full_log</options>
+    </rule>
+</group>
+<group name="jumpcloud,authentication_failed,authentication_failures,">
+    <rule id="866002" level="7">
+        <if_sid>866000</if_sid>
+        <mitre>
+            <id>T1078</id>
+            <id>T1021</id>
+        </mitre>
+        <group>pci_dss_10.2.4,pci_dss_10.2.5,</group>
+        <field name="jumpcloud_event_type">^directory$</field>
+        <field name="success">^false$</field>
+        <field name="initiated_by.type">admin</field>
+        <field name="event_type">admin_login_attempt</field>
+        <description>JumpCloud Portal Admin Login Failed</description>
+        <options>no_full_log</options>
+    </rule>
+</group>
+<group name="jumpcloud,authentication_failures,">
+<rule id="866003" level="10" frequency="4" timeframe="120" ignore="60">
+    <if_matched_sid>866002</if_matched_sid>
+    <mitre>
+        <id>T1078</id>
+        <id>T1021</id>
+    </mitre>
+    <group>pci_dss_10.2.4,pci_dss_10.2.5,</group>
+    <description>JumpCloud Portal Admin Login Failed - Brute Force</description>
+    <options>no_full_log</options>
+</rule>
+</group>
+<group name="jumpcloud,authentication_success,">
+<rule id="866004" level="3">
+    <if_sid>866000</if_sid>
+    <mitre>
+        <id>T1078</id>
+        <id>T1021</id>
+    </mitre>
+    <group>pci_dss_10.2.5,</group>
+    <field name="jumpcloud_event_type">^directory$</field>
+    <field name="success">^true$</field>
+    <field name="event_type">user_login_attempt</field>
+    <description>JumpCloud Portal User Login Success</description>
+    <options>no_full_log</options>
+</rule>
+</group>
+<group name="jumpcloud,authentication_failed,authentication_failures,">
+<rule id="866005" level="7">
+    <if_sid>866000</if_sid>
+    <mitre>
+        <id>T1078</id>
+        <id>T1021</id>
+    </mitre>
+    <group>pci_dss_10.2.4,pci_dss_10.2.5,</group>
+    <field name="jumpcloud_event_type">^directory$</field>
+    <field name="success">^false$</field>
+    <field name="event_type">user_login_attempt</field>
+    <description>JumpCloud Portal User Login Failed</description>
+    <options>no_full_log</options>
+</rule>
+</group>
+<group name="jumpcloud,authentication_success,">
+<rule id="866006" level="3">
+    <if_sid>866000</if_sid>
+    <mitre>
+        <id>T1078</id>
+        <id>T1021</id>
+    </mitre>
+    <group>pci_dss_10.2.5,</group>
+    <field name="jumpcloud_event_type">^systems$</field>
+    <field name="success">^true$</field>
+    <field name="event_type">login_attempt</field>
+    <description>JumpCloud System Login Success</description>
+    <options>no_full_log</options>
+</rule>
+</group>
+<group name="jumpcloud,authentication_failed,authentication_failures,">
+<rule id="866007" level="7">
+    <if_sid>866000</if_sid>
+    <mitre>
+        <id>T1078</id>
+        <id>T1021</id>
+    </mitre>
+    <group>pci_dss_10.2.4,pci_dss_10.2.5,</group>
+    <field name="jumpcloud_event_type">^systems$</field>
+    <field name="success">^false$</field>
+    <field name="event_type">login_attempt</field>
+    <description>JumpCloud System Login Failed</description>
+    <options>no_full_log</options>
+</rule>
+</group>
+<group name="jumpcloud,authentication_success,">
+<rule id="866008" level="3">
+    <if_sid>866000</if_sid>
+    <mitre>
+        <id>T1078</id>
+        <id>T1021</id>
+    </mitre>
+    <group>pci_dss_10.2.5,</group>
+    <field name="jumpcloud_event_type">^sso$</field>
+    <field name="sso_token_success">^true</field>
+    <field name="event_type">sso_auth</field>
+    <description>JumpCloud SSO Login Success</description>
+    <options>no_full_log</options>
+</rule>
+</group>
