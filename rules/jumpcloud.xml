@@ -88,7 +88,7 @@
         <id>T1021</id>
     </mitre>
     <group>pci_dss_10.2.5,</group>
-    <field name="jumpcloud_event_type">^systems$</field>
+    <field name="jumpcloud_event_type">^system$</field>
     <field name="success">^true$</field>
     <field name="event_type">login_attempt</field>
     <description>JumpCloud System Login Success</description>
@@ -103,7 +103,7 @@
         <id>T1021</id>
     </mitre>
     <group>pci_dss_10.2.4,pci_dss_10.2.5,</group>
-    <field name="jumpcloud_event_type">^systems$</field>
+    <field name="jumpcloud_event_type">^system$</field>
     <field name="success">^false$</field>
     <field name="event_type">login_attempt</field>
     <description>JumpCloud System Login Failed</description>
