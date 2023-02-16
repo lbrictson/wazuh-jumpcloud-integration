@@ -1,5 +1,7 @@
 package pkg
 
+// Simple version to text JSON strings for Wazuh to ingest, might need to customize these later
+
 import "encoding/json"
 
 func (d *JumpCloudSystemEvent) convertToWazuhString() string {

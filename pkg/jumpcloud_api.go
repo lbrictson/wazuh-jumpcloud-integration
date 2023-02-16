@@ -20,16 +20,19 @@ import (
 // sso: Logs user authentications to SAML applications.
 // systems: Logs user authentications to MacOS, Windows, and Linux systems, including agent-related events on lockout, password changes, and File Disk Encryption key updates.
 
+// JumpCloudAPI can be used to interact with the JumpCloud API
 type JumpCloudAPI struct {
 	apiKey  string
 	baseURL string
 }
 
+// NewJumpCloudAPIOptions are the options for creating a new JumpCloudAPI object
 type NewJumpCloudAPIOptions struct {
 	APIKey  string
 	BaseURL string
 }
 
+// NewJumpCloudAPI returns a new JumpCloudAPI object, if you do not provide a base URL, it will default to the JumpCloud API
 func NewJumpCloudAPI(options NewJumpCloudAPIOptions) *JumpCloudAPI {
 	a := JumpCloudAPI{
 		apiKey:  options.APIKey,
@@ -41,6 +44,7 @@ func NewJumpCloudAPI(options NewJumpCloudAPIOptions) *JumpCloudAPI {
 	return &a
 }
 
+// GetEventsSinceTime returns all JumpCloud events since the given time
 func (a *JumpCloudAPI) GetEventsSinceTime(startTime time.Time) (*JumpCloudEvents, error) {
 	url := a.baseURL + "/insights/directory/v1/events"
 	method := "POST"
@@ -65,6 +69,7 @@ func (a *JumpCloudAPI) GetEventsSinceTime(startTime time.Time) (*JumpCloudEvents
 	if err != nil {
 		return nil, fmt.Errorf("error reading response body: %v | %v | %v", res.Status, res.StatusCode, err)
 	}
+	// JumpCloud API returns a 200 even if there are no events
 	if res.StatusCode != 200 {
 		return nil, fmt.Errorf("error response from JumpCloud: %v | %v | %v", res.Status, res.StatusCode, string(body))
 	}
@@ -87,6 +92,8 @@ type BaseJumpCloudEvent struct {
 	Service string `json:"service"`
 }
 
+// decodeJumpCloudEvents decodes the raw JumpCloud API response into a JumpCloudEvents object that contains events
+// of the varying types
 func decodeJumpCloudEvents(raw []byte) (JumpCloudEvents, error) {
 	finished := JumpCloudEvents{}
 	generic := []map[string]interface{}{}
