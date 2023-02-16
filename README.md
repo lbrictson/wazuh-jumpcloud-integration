@@ -67,7 +67,7 @@ Add a block to the `ossec.conf` file to configure the JumpCloud log file.  This 
 ```xml
 <localfile>
     <log_format>json</log_format>
-    <location>/opt/tmp/output.log</location>
+    <location>/opt/jumpcloud/output.log</location>
   </localfile>
 ```
 
