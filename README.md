@@ -1,6 +1,8 @@
 # wazuh-jumpcloud-integration
 A pipeline for ingesting [JumpCloud](https://jumpcloud.com/) events into [Wazuh](https://wazuh.com/)
 
+![image](https://user-images.githubusercontent.com/8505034/219263945-23901d63-f974-4feb-8696-d759a86156a3.png)
+
 ## Overview
 
 This integration is designed to be placed on a Wazuh Manager system to interact with the JumpCloud API in order ot pull events
