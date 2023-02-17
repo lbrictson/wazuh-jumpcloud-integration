@@ -32,7 +32,7 @@ func RunService(timeTracker TimeTracker, j JumpCloudConnector, pathToLogFile str
 	if len(e.Directory) == 0 && len(e.LDAP) == 0 && len(e.Systems) == 0 && len(e.SSO) == 0 && len(e.Radius) == 0 {
 		return nil
 	}
-	lastEventSeen := time.Time{}
+	lastEventSeen := lastTime
 	// Loop over all events and find the newest timestamp, we will use this to update the last time we ran the service
 	for _, x := range e.Directory {
 		if x.Timestamp.After(lastEventSeen) {
