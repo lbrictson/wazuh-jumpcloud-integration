@@ -24,12 +24,14 @@ import (
 type JumpCloudAPI struct {
 	apiKey  string
 	baseURL string
+	orgID   string
 }
 
 // NewJumpCloudAPIOptions are the options for creating a new JumpCloudAPI object
 type NewJumpCloudAPIOptions struct {
 	APIKey  string
 	BaseURL string
+	OrgID   string
 }
 
 // NewJumpCloudAPI returns a new JumpCloudAPI object, if you do not provide a base URL, it will default to the JumpCloud API
@@ -37,6 +39,7 @@ func NewJumpCloudAPI(options NewJumpCloudAPIOptions) *JumpCloudAPI {
 	a := JumpCloudAPI{
 		apiKey:  options.APIKey,
 		baseURL: options.BaseURL,
+		orgID:   options.OrgID,
 	}
 	if options.BaseURL == "" {
 		a.baseURL = "https://api.jumpcloud.com"
@@ -59,6 +62,9 @@ func (a *JumpCloudAPI) GetEventsSinceTime(startTime time.Time) (*JumpCloudEvents
 	}
 	req.Header.Add("x-api-key", a.apiKey)
 	req.Header.Add("Content-Type", "application/json")
+	if a.orgID != "" {
+		req.Header.Add("x-org-id", a.orgID)
+	}
 	res, err := client.Do(req)
 	if err != nil {
 		return nil, fmt.Errorf("error making request: %v", err)

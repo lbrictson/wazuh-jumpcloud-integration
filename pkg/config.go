@@ -9,6 +9,7 @@ import (
 type ConfigurationData struct {
 	APIKey  string     `json:"api_key"`
 	BaseURL string     `json:"base_url"`
+	OrgID   string     `json:"org_id"`
 	Last    *time.Time `json:"last"`
 	path    string     `json:"-"`
 }

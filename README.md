@@ -38,6 +38,10 @@ wget https://github.com/lbrictson/wazuh-jumpcloud-integration/releases/download/
 wget https://raw.githubusercontent.com/lbrictson/wazuh-jumpcloud-integration/master/config/config.json -O /opt/jumpcloud/config.json
 # Place your JumpCloud API Key in the config file
 sed -i 's/this-is-not-a-real-key/YOUR-JUMPCLOUD-API-KEY-HERE/g' /opt/jumpcloud/config.json
+# Note if you are running JumpCloud in multi tenant mode you will also need to include your org_id in the config file
+# Reference this document:  https://docs.jumpcloud.com/api/1.0/index.html#section/Multi-Tenant-Portal-Headers
+# To add your org id (again only if multi tenant) open the config file with your favorite editor (vi in this case) and fill in the org_id field
+vi /opt/jumpcloud/config.json
 # Setup permissions
 chmod +x /opt/jumpcloud/wazuh-jumpcloud-integration
 chown -R root:wazuh /opt/jumpcloud
