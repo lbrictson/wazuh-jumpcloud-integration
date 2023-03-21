@@ -62,6 +62,9 @@ func (a *JumpCloudAPI) GetEventsSinceTime(startTime time.Time) (*JumpCloudEvents
 	}
 	req.Header.Add("x-api-key", a.apiKey)
 	req.Header.Add("Content-Type", "application/json")
+	if a.orgID != "" {
+		req.Header.Add("x-org-id", a.orgID)
+	}
 	res, err := client.Do(req)
 	if err != nil {
 		return nil, fmt.Errorf("error making request: %v", err)
