@@ -24,12 +24,14 @@ import (
 type JumpCloudAPI struct {
 	apiKey  string
 	baseURL string
+	orgID   string
 }
 
 // NewJumpCloudAPIOptions are the options for creating a new JumpCloudAPI object
 type NewJumpCloudAPIOptions struct {
 	APIKey  string
 	BaseURL string
+	OrgID   string
 }
 
 // NewJumpCloudAPI returns a new JumpCloudAPI object, if you do not provide a base URL, it will default to the JumpCloud API
@@ -37,6 +39,7 @@ func NewJumpCloudAPI(options NewJumpCloudAPIOptions) *JumpCloudAPI {
 	a := JumpCloudAPI{
 		apiKey:  options.APIKey,
 		baseURL: options.BaseURL,
+		orgID:   options.OrgID,
 	}
 	if options.BaseURL == "" {
 		a.baseURL = "https://api.jumpcloud.com"

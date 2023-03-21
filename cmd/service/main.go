@@ -20,6 +20,7 @@ func main() {
 	jcAPI := pkg.NewJumpCloudAPI(pkg.NewJumpCloudAPIOptions{
 		APIKey:  conf.APIKey,
 		BaseURL: conf.BaseURL,
+		OrgID:   conf.OrgID,
 	})
 	err = pkg.RunService(conf, jcAPI, os.Args[2])
 	if err != nil {
