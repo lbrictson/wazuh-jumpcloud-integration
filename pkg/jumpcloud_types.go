@@ -248,3 +248,35 @@ type JumpCloudSSOEvent struct {
 	IdpInitiated bool      `json:"idp_initiated"`
 	Timestamp    time.Time `json:"timestamp"`
 }
+
+type JumpCloudAdminEvent struct {
+	JumpCloudEventType string `json:"jumpcloud_event_type"`
+	InitiatedBy        struct {
+		ID    string `json:"id"`
+		Type  string `json:"type"`
+		Email string `json:"email"`
+	} `json:"initiated_by"`
+	Geoip struct {
+		CountryCode   string  `json:"country_code"`
+		Timezone      string  `json:"timezone"`
+		Latitude      float64 `json:"latitude"`
+		ContinentCode string  `json:"continent_code"`
+		RegionName    string  `json:"region_name"`
+		Longitude     float64 `json:"longitude"`
+		RegionCode    string  `json:"region_code"`
+	} `json:"geoip"`
+	Resource struct {
+		ID       string `json:"id"`
+		Type     string `json:"type"`
+		Username string `json:"username"`
+	} `json:"resource"`
+	AuthMethod   string    `json:"auth_method"`
+	EventType    string    `json:"event_type"`
+	Provider     any       `json:"provider"`
+	Service      string    `json:"service"`
+	Organization string    `json:"organization"`
+	Version      string    `json:"@version"`
+	ClientIP     string    `json:"client_ip"`
+	ID           string    `json:"id"`
+	Timestamp    time.Time `json:"timestamp"`
+}

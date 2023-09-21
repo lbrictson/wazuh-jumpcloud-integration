@@ -33,3 +33,9 @@ func (d *JumpCloudSSOEvent) convertToWazuhString() string {
 	b, _ := json.Marshal(d)
 	return string(b)
 }
+
+func (d *JumpCloudAdminEvent) convertToWazuhString() string {
+	d.JumpCloudEventType = "admin"
+	b, _ := json.Marshal(d)
+	return string(b)
+}
