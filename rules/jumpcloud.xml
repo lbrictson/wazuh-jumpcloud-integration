@@ -125,3 +125,31 @@
     <options>no_full_log</options>
 </rule>
 </group>
+<group name="jumpcloud,user_created,">
+<rule id="866009" level="10">
+    <if_sid>866000</if_sid>
+    <mitre>
+        <id>T1136</id>
+    </mitre>
+    <group>pci_dss_8.1.2,</group>
+    <field name="jumpcloud_event_type">^directory$</field>
+    <field name="initiated_by.type">admin</field>
+    <field name="event_type">user_create</field>
+    <description>JumpCloud User Created</description>
+    <options>no_full_log</options>
+</rule>
+</group>
+<group name="jumpcloud,user_deleted,">
+<rule id="866010" level="10">
+    <if_sid>866000</if_sid>
+    <mitre>
+        <id>T1136</id>
+    </mitre>
+    <group>pci_dss_8.1.2,</group>
+    <field name="jumpcloud_event_type">^directory$</field>
+    <field name="initiated_by.type">admin</field>
+    <field name="event_type">user_delete</field>
+    <description>JumpCloud User Deleted</description>
+    <options>no_full_log</options>
+</rule>
+</group>

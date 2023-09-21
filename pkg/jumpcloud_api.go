@@ -92,6 +92,7 @@ type JumpCloudEvents struct {
 	Directory []JumpCloudDirectoryEvent `json:"directory"`
 	Radius    []JumpCloudRadiusEvent    `json:"radius"`
 	SSO       []JumpCloudSSOEvent       `json:"sso"`
+	Admin     []JumpCloudAdminEvent     `json:"admin"`
 }
 
 type BaseJumpCloudEvent struct {
@@ -167,6 +168,18 @@ func decodeJumpCloudEvents(raw []byte) (JumpCloudEvents, error) {
 				return JumpCloudEvents{}, err
 			}
 			finished.SSO = append(finished.SSO, e)
+		case "admin":
+			b, err := json.Marshal(generic[i])
+			if err != nil {
+				return JumpCloudEvents{}, err
+			}
+			var e JumpCloudAdminEvent
+			err = json.Unmarshal(b, &e)
+			if err != nil {
+				return JumpCloudEvents{}, err
+			}
+			finished.Admin = append(finished.Admin, e)
+
 		}
 	}
 	return finished, err
