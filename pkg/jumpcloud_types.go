@@ -1,6 +1,9 @@
 package pkg
 
 import "time"
+import "encoding/json"
+import "fmt"
+import "strconv"
 
 type JumpCloudLDAPEvent struct {
 	JumpCloudEventType string `json:"jumpcloud_event_type"`
@@ -27,7 +30,7 @@ type JumpCloudLDAPEvent struct {
 	Success         bool      `json:"success"`
 	Service         string    `json:"service"`
 	Organization    string    `json:"organization"`
-	Version         string    `json:"@version"`
+	Version         Version    `json:"@version"`
 	ErrorCode       int       `json:"error_code"`
 	ID              string    `json:"id"`
 	OperationNumber int       `json:"operation_number"`
@@ -66,7 +69,7 @@ type JumpCloudSystemEvent struct {
 	Success         bool      `json:"success"`
 	Service         string    `json:"service"`
 	Organization    string    `json:"organization"`
-	Version         string    `json:"@version"`
+	Version         Version   `json:"@version"`
 	ClientIP        string    `json:"client_ip,omitempty"`
 	SystemTimestamp time.Time `json:"system_timestamp,omitempty"`
 	ID              string    `json:"id"`
@@ -133,7 +136,7 @@ type JumpCloudDirectoryEvent struct {
 	Success      bool      `json:"success"`
 	Service      string    `json:"service"`
 	Organization string    `json:"organization"`
-	Version      string    `json:"@version"`
+	Version      Version   `json:"@version"`
 	ClientIP     string    `json:"client_ip,omitempty"`
 	ID           string    `json:"id"`
 	Timestamp    time.Time `json:"timestamp"`
@@ -178,7 +181,7 @@ type JumpCloudRadiusEvent struct {
 	Success      bool      `json:"success"`
 	Service      string    `json:"service"`
 	Organization string    `json:"organization"`
-	Version      string    `json:"@version"`
+	Version      Version   `json:"@version"`
 	ClientIP     string    `json:"client_ip"`
 	ID           string    `json:"id"`
 	Username     string    `json:"username"`
@@ -242,7 +245,7 @@ type JumpCloudSSOEvent struct {
 	Provider     string    `json:"provider"`
 	Service      string    `json:"service"`
 	Organization string    `json:"organization"`
-	Version      string    `json:"@version"`
+	Version      Version   `json:"@version"`
 	ClientIP     string    `json:"client_ip"`
 	ID           string    `json:"id"`
 	IdpInitiated bool      `json:"idp_initiated"`
@@ -275,8 +278,43 @@ type JumpCloudAdminEvent struct {
 	Provider     any       `json:"provider"`
 	Service      string    `json:"service"`
 	Organization string    `json:"organization"`
-	Version      string    `json:"@version"`
+	Version      Version   `json:"@version"`
 	ClientIP     string    `json:"client_ip"`
 	ID           string    `json:"id"`
 	Timestamp    time.Time `json:"timestamp"`
+}
+
+// Custom versin type since JumpCloud sometimes sends an int and sometimes a string
+type Version struct {
+	I     int
+	S     string
+	IsInt bool
+}
+
+// Custom String method to print the Version value conveniently.
+func (v Version) String() string {
+	if v.IsInt {
+		return strconv.Itoa(v.I)
+	}
+	return v.S
+}
+
+func (v *Version) UnmarshalJSON(data []byte) error {
+	// Try to unmarshal as int first.
+	var intValue int
+	if err := json.Unmarshal(data, &intValue); err == nil {
+		v.I = intValue
+		v.IsInt = true
+		return nil
+	}
+
+	// If unmarshalling as int fails, try to unmarshal as a string.
+	var stringValue string
+	if err := json.Unmarshal(data, &stringValue); err == nil {
+		v.S = stringValue
+		v.IsInt = false
+		return nil
+	}
+
+	return fmt.Errorf("version can be either an int or a string")
 }
