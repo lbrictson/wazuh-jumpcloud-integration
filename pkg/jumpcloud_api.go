@@ -116,71 +116,83 @@ func decodeJumpCloudEvents(raw []byte) (JumpCloudEvents, error) {
 		case "ldap":
 			b, err := json.Marshal(generic[i])
 			if err != nil {
-				return JumpCloudEvents{}, err
+				fmt.Printf("Error marshalling LDAP generic event - will continue: %v\n", err)
+				continue
 			}
 			var e JumpCloudLDAPEvent
 			err = json.Unmarshal(b, &e)
 			if err != nil {
-				return JumpCloudEvents{}, err
+				fmt.Printf("Error unmarshalling LDAP detailed event - will continue: %v\n", err)
+				continue
 			}
 			finished.LDAP = append(finished.LDAP, e)
 		case "systems":
 			b, err := json.Marshal(generic[i])
 			if err != nil {
-				return JumpCloudEvents{}, err
+				fmt.Printf("Error marshalling Systems generic event - will continue: %v\n", err)
+				continue
 			}
 			var e JumpCloudSystemEvent
 			err = json.Unmarshal(b, &e)
 			if err != nil {
-				return JumpCloudEvents{}, err
+				fmt.Printf("Error unmarshalling Systems detailed event - will continue: %v\n", err)
+				continue
 			}
 			finished.Systems = append(finished.Systems, e)
 		case "directory":
 			b, err := json.Marshal(generic[i])
 			if err != nil {
-				return JumpCloudEvents{}, err
+				fmt.Printf("Error marshalling Directory generic event - will continue: %v\n", err)
+				continue
 			}
 			var e JumpCloudDirectoryEvent
 			err = json.Unmarshal(b, &e)
 			if err != nil {
-				return JumpCloudEvents{}, err
+				fmt.Printf("Error unmarshalling Directory detailed event - will continue: %v\n", err)
+				continue
 			}
 			finished.Directory = append(finished.Directory, e)
 		case "radius":
 			b, err := json.Marshal(generic[i])
 			if err != nil {
-				return JumpCloudEvents{}, err
+				fmt.Printf("Error marshalling Radius generic event - will continue: %v\n", err)
+				continue
 			}
 			var e JumpCloudRadiusEvent
 			err = json.Unmarshal(b, &e)
 			if err != nil {
-				return JumpCloudEvents{}, err
+				fmt.Printf("Error unmarshalling Radius detailed event - will continue: %v\n", err)
+				continue
 			}
 			finished.Radius = append(finished.Radius, e)
 		case "sso":
 			b, err := json.Marshal(generic[i])
 			if err != nil {
-				return JumpCloudEvents{}, err
+				fmt.Printf("Error marshalling SSO generic event - will continue: %v\n", err)
+				continue
 			}
 			var e JumpCloudSSOEvent
 			err = json.Unmarshal(b, &e)
 			if err != nil {
-				return JumpCloudEvents{}, err
+				fmt.Printf("Error unmarshalling SSO detailed event - will continue: %v\n", err)
+				continue
 			}
 			finished.SSO = append(finished.SSO, e)
 		case "admin":
 			b, err := json.Marshal(generic[i])
 			if err != nil {
-				return JumpCloudEvents{}, err
+				fmt.Printf("Error marshalling Admin generic event - will continue: %v\n", err)
+				continue
 			}
 			var e JumpCloudAdminEvent
 			err = json.Unmarshal(b, &e)
 			if err != nil {
-				return JumpCloudEvents{}, err
+				fmt.Printf("Error unmarshalling Admin detailed event - will continue: %v\n", err)
+				continue
 			}
 			finished.Admin = append(finished.Admin, e)
 
 		}
 	}
-	return finished, err
+	return finished, nil
 }
