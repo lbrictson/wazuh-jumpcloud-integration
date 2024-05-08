@@ -15,3 +15,5 @@
 # vendor/
 tmp/
 .idea
+.envrc
+.direnv
